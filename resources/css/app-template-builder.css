@@ -1,0 +1,23 @@
+.uikit-app-template-builder-base-app-template
+{
+    height: 100vh; 
+    width: 100vw;
+}
+
+.uikit-app-template-builder-dropdown-button
+{
+    height: 100%; 
+    width: 100%; 
+    overflow: hidden;
+}
+
+.uikit-app-template-builder-dropdown-panel
+{
+    display: none; 
+    position: fixed; 
+    overflow-x: hidden; 
+    overflow-y: auto; 
+    overflow-anchor: none; 
+    z-index: 9999;
+    scrollbar-gutter: stable;
+}

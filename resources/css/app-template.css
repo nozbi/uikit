@@ -1,0 +1,104 @@
+body 
+{
+    font-family: 'Inter', sans-serif;
+}
+
+.uikit-app-template mark 
+{
+    color: inherit;
+    background-color: var(--uikit-app-template-mark-color);
+}
+
+.uikit-app-template::selection 
+{
+    color: inherit;
+    background: var(--uikit-app-template-selection-color);
+}
+
+.uikit-app-template div[id^='scroll-panel']:has([id^='customSearchableTree']),
+.uikit-app-template div[id^='custom-dropdown'] 
+{
+    background-color: var(--uikit-app-template-scroll-panel-color);
+}
+
+.uikit-app-template div[id^='scroll-panel']:has([id^='customSearchableTree'])::-webkit-scrollbar,
+.uikit-app-template div[id^='custom-dropdown']::-webkit-scrollbar 
+{
+    width: 2px;
+    height: 2px;
+    background-color: transparent;
+}
+
+.uikit-app-template div[id^='scroll-panel']:has([id^='customSearchableTree'])::-webkit-scrollbar-thumb,
+.uikit-app-template div[id^='custom-dropdown']::-webkit-scrollbar-thumb 
+{
+    background-color: var(--uikit-app-template-scrollbar-color);
+}
+
+.uikit-app-template div[id^='scroll-panel']:has([id^='customSearchableTree'])::-webkit-scrollbar-corner,
+.uikit-app-template div[id^='custom-dropdown']::-webkit-scrollbar-corner 
+{
+    background-color: transparent;
+}
+
+.uikit-app-template-search-bar
+{
+    height: 100%; 
+    width: 100%; 
+    border-radius: 8px; 
+    box-sizing: border-box; 
+    outline: none; 
+    border: none;
+}
+
+.uikit-app-template-search-bar::placeholder 
+{
+    color: var(--uikit-app-template-search-bar-placeholder-color);
+}
+
+.uikit-app-template-arrow
+{
+    width: 100%; 
+    height: 100%;
+}
+
+.uikit-app-template-avatar
+{
+    height: 100%; 
+    aspect-ratio: 1/1; 
+    border-radius: 50%; 
+    overflow: hidden; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    border: 2px solid currentColor; 
+    box-sizing: border-box;
+}
+
+.uikit-app-template-avatar-image
+{
+    height: 100%; 
+    width: auto; 
+    display: block;
+}
+
+.uikit-app-template-hamburger
+{
+    width: 100%; 
+    height: 100%;
+}
+
+.uikit-app-template-logo
+{
+    height: 100%; 
+    margin: auto;
+}
+
+.uikit-app-template-logo-image
+{
+    height: 100%; 
+    width: auto; 
+    padding: 5px; 
+    filter: drop-shadow(0 0 2px currentColor); 
+    box-sizing: border-box;
+}

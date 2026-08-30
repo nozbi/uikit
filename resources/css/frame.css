@@ -1,0 +1,14 @@
+.uikit-frame-responsive-frame-root 
+{
+    container-type: inline-size;
+}
+
+.uikit-frame-responsive-frame-sidebar 
+{
+    width: var(--uikit-frame-sidebar-width);
+}
+
+.uikit-frame-interactive-frame-sidebar 
+{
+    display: none;
+}

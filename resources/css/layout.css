@@ -1,0 +1,55 @@
+.uikit-layout-fill-layout
+{
+    width: 100%; 
+    height: 100%; 
+    display: grid; 
+    overflow: hidden; 
+    min-height: 0;
+}
+
+.uikit-layout-fill-layout > *:first-child
+{
+    min-height: 0;
+}
+
+.uikit-layout-flex-layout-grow-item
+{
+    flex-grow: 1; 
+    min-height: 0; 
+    min-width: 0;
+}
+
+.uikit-layout-horizontal-flex-layout
+{
+    display: flex; 
+    min-height: 0; 
+    min-width: 0;
+}
+
+.uikit-layout-vertical-flex-layout
+{
+    display: flex; 
+    flex-direction: column; 
+    min-height: 0; 
+    min-width: 0;
+}
+
+.uikit-layout-vertical-layout
+{
+    width: 100%; 
+    overflow-x: hidden;
+}
+
+.uikit-layout-horizontal-layout
+{
+    height: 100%; 
+    overflow-y: hidden; 
+    width: fit-content; 
+    display: flex;
+}
+
+.uikit-layout-horizontal-layout-element
+{
+    flex-shrink: 0; 
+    display: flex;
+}
