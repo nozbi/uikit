@@ -28,9 +28,6 @@ Create class extending App and create instance of it inside routes/web.php
 ```php
 use Nozbi\Uikit\App\App;
 use Nozbi\Uikit\App\Config;
-use Nozbi\Uikit\App\Avatar;
-use Nozbi\Uikit\App\Logo;
-use Nozbi\Uikit\App\Wrappers;
 use Nozbi\Uikit\App\Translations;
 use Nozbi\Uikit\App\Colors;
 use Override;
