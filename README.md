@@ -22,8 +22,8 @@ Component for creating application UI shell and routes.
 - Breadcrumbs
 - Fully styled
 - Customizable colors
-
 #### Example usage
+Create class extening App and create instance of it inside routes/web.php
 
 ```php
 use Nozbi\Uikit\App\App;
