@@ -13,11 +13,10 @@ abstract class MenuItem extends Arrayable
 
     protected final function setParentAuthResolver(Closure $parentAuthResolver): void
     {
-        $this->authResolver = function () use (
-            $parentAuthResolver
-        ): bool {
-            return $parentAuthResolver()
-                && ($this->authResolver)();
+        $authResolver = $this->authResolver;
+        $this->authResolver = function () use ($parentAuthResolver, $authResolver): bool 
+        {
+            return $parentAuthResolver() && ($authResolver)();
         };
     }
 
