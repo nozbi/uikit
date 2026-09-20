@@ -17,7 +17,7 @@ final class MenuRoute extends MenuItem
     #[\Override]
     public function toInternal(): InternalNavRoute
     {
-        return new InternalNavRoute($this->getLabel(), $this->getAuth(), $this->getName(), $this->dropdownMenuIndex, ...$this->getInternalSubRoutes());
+        return new InternalNavRoute($this->getLabel(), $this->getAuthResolver(), $this->getName(), $this->dropdownMenuIndex, ...$this->getInternalSubRoutes());
     }
 
     public function endMenuRoute(): Config|Menu

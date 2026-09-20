@@ -78,7 +78,7 @@ final readonly class RoutedAppTemplateHelper
         );
         foreach ($menu->getNavRoutes() as $navRoute)
         {
-            self::registerSubRoutes($routedAppTemplate, $navRoute->getSubRoutes(), self::convertToUrlName($navRoute->getName()), $navRoute->getName(), fn (array $params): bool => $navRoute->getAuth(), [[fn (array $params): string => $navRoute->getLabel(), $navRoute->getName()]]);
+            self::registerSubRoutes($routedAppTemplate, $navRoute->getSubRoutes(), self::convertToUrlName($navRoute->getName()), $navRoute->getName(), $navRoute->getAuthResolver(), [[fn (array $params): string => $navRoute->getLabel(), $navRoute->getName()]]);
         }
     }
 }

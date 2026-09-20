@@ -4,12 +4,13 @@ namespace Nozbi\Uikit\RoutedAppTemplate;
 
 use Illuminate\Support\Facades\Route;
 use Closure;
+use Illuminate\Http\RedirectResponse;
 
 final readonly class RoutedAppTemplate
 {
     private readonly AppTemplateRouteCreator $appTemplateRouteCreator;
 
-    private static function getLinks(array $menuItems, bool $auth): array
+    private static function getLinks(array $menuItems, Closure $authResolver): array
     {
         $links = [];
         foreach ($menuItems as $menuItem) 
@@ -17,45 +18,17 @@ final readonly class RoutedAppTemplate
             $submenuMenuItemsOrLinkRouteName = $menuItem[1];
             if (is_array($submenuMenuItemsOrLinkRouteName))
             {
-                $menuItem[2] = $auth && $menuItem[2];
+                $menuItem[2] = fn (): bool => $authResolver() && ($menuItem[2])();
                 $subMenuAuth = $menuItem[2];
                 $links = array_merge($links, self::getLinks($submenuMenuItemsOrLinkRouteName, $subMenuAuth));
             }
             else 
             {
-                $menuItem[3] = $auth && $menuItem[3];
+                $menuItem[3] = fn (): bool => $authResolver() && ($menuItem[3])();
                 $links[] = $menuItem;
             }
         }
         return $links;
-    }
-
-    private static function getAuthorizedMenuItems(array $menuItems): array
-    {
-        foreach ($menuItems as $index => $menuItem) 
-        {   
-            $hasAccess = null;
-            $submenuMenuItemsOrLinkRouteName = $menuItem[1];
-            $isSubmenu = is_array($submenuMenuItemsOrLinkRouteName);
-            if (is_array($submenuMenuItemsOrLinkRouteName))
-            {
-                $hasAccess = $menuItem[2] ?? true;
-            }
-            else 
-            {
-                $hasAccess = $menuItem[3] ?? true;
-            }
-            if (!$hasAccess)
-            {
-                unset($menuItems[$index]);
-            }
-            else if ($isSubmenu)
-            {
-                $menuItem[1] = self::getAuthorizedMenuItems($submenuMenuItemsOrLinkRouteName);
-                $menuItems[$index] = $menuItem;
-            }
-        }
-        return $menuItems;
     }
 
     public function __construct( 
@@ -77,7 +50,7 @@ final readonly class RoutedAppTemplate
         ?string $footerText = null,
     )
     {
-        $authorizedMenuItems = self::getAuthorizedMenuItems($menuItems);
+        $authorizedMenuItems = $menuItems;
         $this->appTemplateRouteCreator = new AppTemplateRouteCreator(
             $authorizedMenuItems, 
             $livewire,
@@ -96,7 +69,7 @@ final readonly class RoutedAppTemplate
             $htmlDocumentTemplateComponent,
             $viewWrapperComponent,
         );
-        $links = self::getLinks($menuItems, true);
+        $links = self::getLinks($menuItems, fn (): bool => true);
         foreach ($links as $link)
         {
             $label = $link[0];
@@ -104,10 +77,7 @@ final readonly class RoutedAppTemplate
             $auth = $link[3];
             $this->appTemplateRouteCreator->createNavRoute($name, $auth, $label);
         }
-        Route::get('/', function () use ($rootRoute)
-        {
-            return redirect()->route($rootRoute);
-        });
+        Route::get('/', fn (): RedirectResponse => redirect()->route($rootRoute));
     }
 
     public function createSubRoute(string $url, string $name, Closure $authResolver, array $breadcrumbs)

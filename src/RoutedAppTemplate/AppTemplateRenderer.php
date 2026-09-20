@@ -5,8 +5,36 @@ namespace Nozbi\Uikit\RoutedAppTemplate;
 use Illuminate\Support\Facades\Route;
 use Nozbi\Uikit\BladeComponentRenderer;
 
-final class AppTemplateRenderer
+final class AppTemplateRenderer //todo make uth calklngi closure here
 {
+    private static function getAuthorizedMenuItems(array $menuItems): array
+    {
+        foreach ($menuItems as $index => $menuItem) 
+        {   
+            $hasAccess = null;
+            $submenuMenuItemsOrLinkRouteName = $menuItem[1];
+            $isSubmenu = is_array($submenuMenuItemsOrLinkRouteName);
+            if (is_array($submenuMenuItemsOrLinkRouteName))
+            {
+                $hasAccess = $menuItem[2]([]) === true;
+            }
+            else 
+            {
+                $hasAccess = $menuItem[3]([]) === true;
+            }
+            if (!$hasAccess)
+            {
+                unset($menuItems[$index]);
+            }
+            else if ($isSubmenu)
+            {
+                $menuItem[1] = self::getAuthorizedMenuItems($submenuMenuItemsOrLinkRouteName);
+                $menuItems[$index] = $menuItem;
+            }
+        }
+        return $menuItems;
+    }
+
     public static function render(
         array $menuItems,
         string $slot,
@@ -27,7 +55,7 @@ final class AppTemplateRenderer
     ): string
     {
         $appTemplateAttributes = array_filter([
-            'menuItems' => $menuItems,
+            'menuItems' => self::getAuthorizedMenuItems($menuItems),
             'livewire' => $livewire,
             'avatar' => $avatar,
             'logo' => $logo,

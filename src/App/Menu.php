@@ -16,7 +16,7 @@ final class Menu extends MenuItem
     #[\Override]
     public function toInternal(): InternalSubMenu
     {
-        return new InternalSubMenu($this->getLabel(), $this->getAuth(), ...$this->getInternalMenuItems());
+        return new InternalSubMenu($this->getLabel(), $this->getAuthResolver(), ...$this->getInternalMenuItems());
     }
 
     public function endMenu(): Config|self

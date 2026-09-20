@@ -2,11 +2,13 @@
 
 namespace Nozbi\Uikit\RoutedAppTemplateHelper;
 
+use Closure;
+
 final class NavRoute extends MenuItem
 {
     use HasRouteData;
 
-    public function __construct(private readonly string $label, bool $auth, string $name, ?int $dropdownMenuIndex, SubRoute ...$subRoutes) 
+    public function __construct(private readonly string $label, Closure $authResolver, string $name, ?int $dropdownMenuIndex, SubRoute ...$subRoutes) 
     {
         $this->name = $name;
         $this->subRoutes = $subRoutes;
@@ -14,8 +16,8 @@ final class NavRoute extends MenuItem
         $array[] = $label;
         $array[] = $name;
         $array[] = $dropdownMenuIndex;
-        $array[] = $auth;
-        parent::__construct($array, $auth);
+        $array[] = $authResolver;
+        parent::__construct($array, $authResolver);
     }
 
     public function getLabel(): string

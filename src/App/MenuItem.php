@@ -4,6 +4,7 @@ namespace Nozbi\Uikit\App;
 
 use Nozbi\Uikit\RoutedAppTemplateHelper\SubMenu as InternalSubMenu;
 use Nozbi\Uikit\RoutedAppTemplateHelper\NavRoute as InternalNavRoute;
+use Closure;
 
 abstract class MenuItem
 {
@@ -22,9 +23,9 @@ abstract class MenuItem
         return $this->label;
     }
 
-    protected function getAuth(): bool
+    protected function getAuthResolver(): Closure
     {
-        return App::canMenuItem($this->name);
+        return fn (): bool => App::canMenuItem($this->name);
     }
 
     protected function getParent(): Config|Menu

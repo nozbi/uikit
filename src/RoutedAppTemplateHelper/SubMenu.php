@@ -2,21 +2,23 @@
 
 namespace Nozbi\Uikit\RoutedAppTemplateHelper;
 
+use Closure;
+
 final class SubMenu extends MenuItem
 {
     use HasMenuItems;
 
-    public function __construct(string $label, bool $auth, MenuItem ...$menuItems)
+    public function __construct(string $label, Closure $authResolver, MenuItem ...$menuItems)
     {
         $this->menuItems = $menuItems;
         $array = [];
         $array[] = $label;
         $array[] = $this->getMenuItemsAsArray();
-        $array[] = $auth;
-        parent::__construct($array, $auth);
+        $array[] = $authResolver;
+        parent::__construct($array, $authResolver);
         foreach ($menuItems as $menuItem)
         {
-            $menuItem->setParentAuth($auth);
+            $menuItem->setParentAuthResolver($authResolver);
         }
     }
 }

@@ -68,9 +68,9 @@ final readonly class AppTemplateRouteCreator
         );
     }
 
-    public function createNavRoute(string $name, bool $auth, string $label)
+    public function createNavRoute(string $name, Closure $authResolver, string $label)
     {
-        self::createRoute($this->appTemplateRouteRenderer, strtolower(preg_replace('/([A-Z])/', '-$1', $name)), $name, fn ($params): bool => $auth, [[fn ($params): string => $label, $name]]);
+        self::createRoute($this->appTemplateRouteRenderer, strtolower(preg_replace('/([A-Z])/', '-$1', $name)), $name, fn ($params): bool => $authResolver(), [[fn ($params): string => $label, $name]]);
     }
 
     public function createSubRoute(string $url, string $name, Closure $authResolver, array $breadcrumbs)
