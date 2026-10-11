@@ -4,9 +4,9 @@ namespace Nozbi\Uikit\App;
 
 final class ParamRoute extends SubRoute
 {
-    public function __construct(string $name, ?string $label, MenuRoute|SubRoute $parent) 
+    public function __construct(string $name, ?string $label, MenuRoute|SubRoute $parent, bool $createRoute) 
     {
-        parent::__construct($name, $label, true, $parent);
+        parent::__construct($name, $label, true, $parent, $createRoute);
     }
 
     public function endParamRoute(): MenuRouteEnder|RouteEnder|ParamRouteEnder

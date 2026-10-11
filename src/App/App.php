@@ -3,10 +3,13 @@
 namespace Nozbi\Uikit\App;
 
 use Nozbi\Uikit\RoutedAppTemplateHelper\RoutedAppTemplateHelper;
+use Nozbi\Uikit\RoutedAppTemplate\Config as RoutedAppTemplateConfig;
 
 abstract class App
 {
     private static App $instance;
+
+    private readonly RoutedAppTemplateHelper $routedAppTemplateHelper;
 
     private static function callMethod(string $name, ?array $params): mixed
     {
@@ -22,12 +25,18 @@ abstract class App
 
     private static function can(string $name, ?array $params): bool
     {
+        $name = self::convertToCamelCase($name);
         $methodName = 'can_' . $name;
         if (!method_exists(self::$instance, $methodName) && !self::$instance->isSecured()) 
         {
             return true;
         }
         return self::callMethod($methodName, $params);
+    }
+
+    private static function convertToCamelCase(string $kebabCaseString): string
+    {
+        return lcfirst(str_replace(' ', '', ucwords(str_replace('-', ' ', $kebabCaseString))));
     }
 
     public static function canMenuItem(string $name): bool
@@ -42,8 +51,14 @@ abstract class App
 
     public static function getSubRouteLabel(string $name, array $params): string
     {
+        $name = self::convertToCamelCase($name);
         $methodName = 'getLabel_' . $name;
         return self::callMethod($methodName, $params);
+    }
+
+    public static function render(string $slot): string
+    {
+        return self::$instance->asBlade($slot);
     }
 
     public final function __construct()
@@ -51,25 +66,32 @@ abstract class App
         $translations = $this->getTranslations();
         $colors = $this->getColors();
         self::$instance = $this;
-        new RoutedAppTemplateHelper
+        $this->routedAppTemplateHelper = new RoutedAppTemplateHelper
         (
             $this->getConfig()->toInternal(),
-            $this->usesLivewireNavigate(),
-            $this->getAvatar(),
-            $this->getLogo(),
-            $this->getRootRoute(),
-            $this->getOuterWrapper(),
-            $this->getInnerWrapper(),
-            $colors->primaryColor,
-            $colors->secondaryColor,
-            $colors->activeColor,
-            $translations->openSideBarText,
-            $translations->closeSideBarText,
-            $translations->searchText,
-            $translations->logoText,
-            $translations->avatarText,
-            $translations->footerText,
+            fn (): RoutedAppTemplateConfig => new RoutedAppTemplateConfig(
+                $this->usesLivewireNavigate(),
+                $this->getAvatar(),
+                $this->getLogo(),
+                $this->getRootRoute(),
+                $translations->openSideBarText,
+                $translations->closeSideBarText,
+                $translations->searchText,
+                $translations->logoText,
+                $translations->avatarText,
+                $colors->primaryColor,
+                $colors->secondaryColor,
+                $colors->activeColor,
+                $translations->footerText,
+                $this->getOuterWrapper(),
+                $this->getInnerWrapper(),
+            ),
         );
+    }
+
+    private function asBlade(string $slot): string
+    {
+        return $this->routedAppTemplateHelper->render($slot);
     }
 
     protected function usesLivewireNavigate(): bool
@@ -114,5 +136,4 @@ abstract class App
 
     protected abstract function getRootRoute(): string;
     protected abstract function getConfig(): Config;
-
 }

@@ -4,11 +4,11 @@ namespace Nozbi\Uikit\RoutedAppTemplateHelper;
 
 use Closure;
 
-final readonly class SubRoute
+final readonly class SubRoute //todo use passed cratroute param
 {
     use HasRouteData;
 
-    public function __construct(private Closure $labelResolver, private Closure $authResolver, string $name, private bool $parameterized, SubRoute ...$subRoutes) 
+    public function __construct(private Closure $labelResolver, private Closure $authResolver, string $name, private bool $parameterized, private readonly bool $createRoute, SubRoute ...$subRoutes) 
     {
         $this->name = $name;
         $this->subRoutes = $subRoutes;
@@ -27,5 +27,10 @@ final readonly class SubRoute
     public function isParameterized(): bool
     {
         return $this->parameterized;
+    }
+
+    public function isRouteAlreadyCreated(): bool
+    {
+        return $this->createRoute;
     }
 }

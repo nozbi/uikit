@@ -11,7 +11,7 @@ abstract class SubRoute
 
     private readonly Closure $labelResolver;
 
-    public function __construct(string $name, ?string $label, private readonly bool $parameterized, private readonly MenuRoute|SubRoute $parent) 
+    public function __construct(string $name, ?string $label, private readonly bool $parameterized, private readonly MenuRoute|SubRoute $parent, private readonly bool $createRoute) 
     { 
         $this->name = $name;
         if ($label)
@@ -26,7 +26,7 @@ abstract class SubRoute
 
     public function toInternal(): InternalSubRoute
     {
-        return new InternalSubRoute($this->labelResolver, fn (array $params): bool => App::canSubRoute($this->getFullName(), $params), $this->name, $this->parameterized, ...$this->getInternalSubRoutes());
+        return new InternalSubRoute($this->labelResolver, fn (array $params): bool => App::canSubRoute($this->getFullName(), $params), $this->name, $this->parameterized, $this->createRoute, ...$this->getInternalSubRoutes());
     }
 
     protected function getParent(): MenuRoute|SubRoute

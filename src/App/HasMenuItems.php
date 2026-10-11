@@ -12,9 +12,9 @@ trait HasMenuItems
         return $menuItem;
     }
 
-    private function addMenuRoute(string $name, string $label, ?int $dropdownMenuIndex): MenuRoute
+    private function addMenuRoute(string $name, string $label, ?int $dropdownMenuIndex, bool $createRoute): MenuRoute
     {
-        return $this->addMenuItem(new MenuRoute($name, $label, $this, $dropdownMenuIndex));
+        return $this->addMenuItem(new MenuRoute($name, $label, $this, $dropdownMenuIndex, $createRoute));
     }
 
     protected final function getInternalMenuItems(): array
@@ -32,14 +32,14 @@ trait HasMenuItems
         return $this->addMenuItem(new Menu($name, $label, $this));
     }
 
-    public final function menuRoute(string $name, string $label, ?int $userMenuIndex = null): self
+    public final function menuRoute(string $name, string $label, ?int $userMenuIndex = null, bool $createRoute = true): self
     {
-        $this->addMenuRoute($name, $label, $userMenuIndex);
+        $this->addMenuRoute($name, $label, $userMenuIndex, $createRoute);
         return $this;
     }
 
-    public final function startMenuRoute(string $name, string $label, ?int $userMenuIndex = null): MenuRoute
+    public final function startMenuRoute(string $name, string $label, ?int $userMenuIndex = null, bool $createRoute = true): MenuRoute
     {
-        return $this->addMenuRoute($name, $label, $userMenuIndex);
+        return $this->addMenuRoute($name, $label, $userMenuIndex, $createRoute);
     }
 }

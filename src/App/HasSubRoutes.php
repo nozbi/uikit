@@ -15,14 +15,14 @@ trait HasSubRoutes
         return $subRoute;
     }
 
-    private function addRoute(string $name, ?string $label): Route
+    private function addRoute(string $name, ?string $label, bool $createRoute): Route
     {
-        return $this->addSubRoute(new Route($name, $label, $this));
+        return $this->addSubRoute(new Route($name, $label, $this, $createRoute));
     }
 
-    private function addParamRoute(string $name, ?string $label): ParamRoute
+    private function addParamRoute(string $name, ?string $label, bool $createRoute): ParamRoute
     {
-        return $this->addSubRoute(new ParamRoute($name, $label, $this));
+        return $this->addSubRoute(new ParamRoute($name, $label, $this, $createRoute));
     }
 
     protected final function getInternalSubRoutes(): array
@@ -51,25 +51,25 @@ trait HasSubRoutes
         $this->parentName = $name;
     }
 
-    public final function route(string $name, ?string $label = null): self
+    public final function route(string $name, ?string $label = null, bool $createRoute = true): self
     {
-        $this->addRoute($name, $label);
+        $this->addRoute($name, $label, $createRoute);
         return $this;
     }
 
-    public final function paramRoute(string $name, ?string $label = null): self
+    public final function paramRoute(string $name, ?string $label = null, bool $createRoute = true): self
     {
-        $this->addParamRoute($name, $label);
+        $this->addParamRoute($name, $label, $createRoute);
         return $this;
     }
 
-    public final function startRoute(string $name, ?string $label = null): Route
+    public final function startRoute(string $name, ?string $label = null, bool $createRoute = true): Route
     {
-        return $this->addRoute($name, $label);
+        return $this->addRoute($name, $label, $createRoute);
     }
 
-    public final function startParamRoute(string $name, ?string $label = null): ParamRoute
+    public final function startParamRoute(string $name, ?string $label = null, bool $createRoute = true): ParamRoute
     {
-        return $this->addParamRoute($name, $label);
+        return $this->addParamRoute($name, $label, $createRoute);
     }
 }

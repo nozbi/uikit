@@ -92,17 +92,19 @@ class MyApp extends App
     protected function getConfig(): Config //return routing schema
     {
         //all config items takes relative name plus label as first 2 parameters (subroutes dont need to pass label if method for getting label is present)
-        //menu route additionaly can take third argument with index inside user menu if its need to be part of it (user menu is one level menu with items ordered by index from lowest to highest)
-        //keep in mind all names in config must be written in camel case and are relative to its parent name, so full name is parent name + relative name, connected with underscore (_)
+        //menu route additionaly can take third argument with index inside user menu if its need to be part of it (user menu is one level menu with items ordered by index from lowest to highest) and fourth bool argument that if set to false will not create route
+        //route and param routes can take third bool argument that if set to false will not create route
+        //keep in mind all names in config must follow laravel route naming convention (kebab case) and are relative to its parent name, so full name is parent name + relative name, connected with dot (.)
+        //full item names in methods must have underscores (_) instead of dots (.) and camel case insteab of kebab case 
         //auth methods need full item name prefixed with can_
         //getting label method need full subroute name prefixed with getLabel_
         //both methods optionaly take associative array as parameter with all route parameters
         return new Config()
         ->startMenuRoute('forbidden', 'Forbidden', 0)
-            ->route('alsoForbidden', 'Also forbidden bescause parent route is forbidden')
+            ->route('also-forbidden', 'Also forbidden bescause parent route is forbidden')
         ->endMenuRoute()
-        ->startMenu('forbiddenMenu', 'Forbidden menu')
-            ->menuRoute('alsoForbidden', 'Also forbidden bescause parent menu is forbidden')
+        ->startMenu('forbidden-menu', 'Forbidden menu')
+            ->menuRoute('also-forbidden', 'Also forbidden bescause parent menu is forbidden')
         ->endMenu()
         ->menuRoute('dashboard', 'Dashboard')
         ->menuRoute('profile', 'Profile', 1)
@@ -116,7 +118,7 @@ class MyApp extends App
                 ->endParamRoute()
             ->endMenuRoute()
         ->endMenu()
-        ->menuRoute('notSecured', 'Not secured')
+        ->menuRoute('not-secured', 'Not secured')
         ;
     }
 
@@ -191,3 +193,6 @@ class MyApp extends App
     }
 }
 ```
+
+#### Advanced usage
+Some packages create their own routing. Instead of overriding external routes it is possible to place app shell as blade component (x-uikit::app) inside external routes views. Component takes slot with route specific content. Component still need a way to receive needed data, such as breadcrumbs or title. In order to achive this, it is needed to declare external routes just like any other route in route config. Only difference is that external routes need to have create route attribute set to false. Keep in mind that auth method specified for external route will apply only for visiblity inside menu, so external route itself need to be properly secured.

@@ -1,0 +1,1 @@
+{!! \App\MyApp::render($slot) !!}

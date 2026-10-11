@@ -3,7 +3,7 @@
 ])
 
 @php
-    $placeholder = str_replace('.', '/', $route) . '.blade.php';
+    $placeholder = $route . '.blade.php';
 @endphp
 
 

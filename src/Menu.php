@@ -16,7 +16,7 @@ class Menu
 
     private static function isLinkActive(string $route) :bool
     {
-        return request()->routeIs($route, $route . '_*');
+        return request()->routeIs($route, $route . '.*');
     }
 
     private static function isSubmenuActive(array $submenu) :bool

@@ -15,7 +15,7 @@
 
     'primaryColor' => 'black', 
     'secondaryColor' => 'white',
-    'secondaryActiveColor' => 'orange',
+    'activeColor' => 'orange',
 
     'footerText' => '© 2026 UIkit. All rights reserved.',
     'breadcrumbs' => [[fn (array $params): string => 'Uikit']],
@@ -39,7 +39,7 @@
     :avatar-text="$avatarText"
 
     :color="$secondaryColor"
-    :active-color="$secondaryActiveColor"
+    :active-color="$activeColor"
     :background-color="$primaryColor"
 >
 
@@ -52,7 +52,11 @@
         @if (count($breadcrumbs) > 1)
             <x-uikit::panels.horizontal-panel>
                 @foreach ($breadcrumbs as $index => $breadcrumb)
-                    <x-uikit::buttons.link :route="$breadcrumb[1]" :parameters="request()->route()->parameters()" :livewire="$livewire">
+                    @php
+                        $targetRoute = app('router')->getRoutes()->getByName($breadcrumb[1]);
+                        $parameters = collect(request()->route()->parameters())->filter(fn ($value, $key) => str_contains($targetRoute->uri(), '{' . $key . '}'))->all();
+                    @endphp
+                    <x-uikit::buttons.link :route="$breadcrumb[1]" :parameters="$parameters" :livewire="$livewire">
                         <x-uikit::app-template.interactive-panel :color="$primaryColor" :background-color="'transparent'">
                             @if ($index !== 0)
                                 &nbsp;>
