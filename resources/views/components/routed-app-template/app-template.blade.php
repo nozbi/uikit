@@ -22,9 +22,9 @@
         :logo-text="$config->logoText"
         :avatar-text="$config->avatarText"
 
-        :color="$config->secondaryColor"
+        :primary-color="$config->primaryColor"
+        :secondary-color="$config->secondaryColor"
         :active-color="$config->activeColor"
-        :background-color="$config->primaryColor"
 
         :footer-text="$config->footerText"
         
