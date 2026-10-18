@@ -42,45 +42,37 @@
     :active-color="$activeColor"
     :background-color="$primaryColor"
 >
-
-
-
-
-
-<div class="uikit-advanced-app-template" style="--uikit-advanced-app-template-scrollbar-color:{{ $primaryColor }}; background-color:{{ $secondaryColor }};">
-    <div class="uikit-advanced-app-template-breadcrumbs">
-        @if (count($breadcrumbs) > 1)
-            <x-uikit::panels.horizontal-panel>
-                @foreach ($breadcrumbs as $index => $breadcrumb)
-                    @php
-                        $targetRoute = app('router')->getRoutes()->getByName($breadcrumb[1]);
-                        $parameters = collect(request()->route()->parameters())->filter(fn ($value, $key) => str_contains($targetRoute->uri(), '{' . $key . '}'))->all();
-                    @endphp
-                    <x-uikit::buttons.link :route="$breadcrumb[1]" :parameters="$parameters" :livewire="$livewire">
-                        <x-uikit::app-template.interactive-panel :color="$primaryColor" :background-color="'transparent'">
-                            @if ($index !== 0)
-                                &nbsp;>
-                            @endif    
-                            {{ $breadcrumb[0](request()->route()->parameters()) }}
-                        </x-uikit::app-template.interactive-panel>
-                    </x-uikit::buttons.link>
-                @endforeach
-            </x-uikit::panels.horizontal-panel>   
-        @else
-            &nbsp;
-        @endif
-    </div> 
-    <div class="uikit-advanced-app-template-header">
-        {{ $header }}
+    <div class="uikit-advanced-app-template" style="--uikit-advanced-app-template-scrollbar-color:{{ $primaryColor }}; background-color:{{ $secondaryColor }}; color:{{ $primaryColor }};">
+        <div class="uikit-advanced-app-template-breadcrumbs">
+            @if (count($breadcrumbs) > 1)
+                <x-uikit::panels.horizontal-panel>
+                    @foreach ($breadcrumbs as $index => $breadcrumb)
+                        @php
+                            $targetRoute = app('router')->getRoutes()->getByName($breadcrumb[1]);
+                            $parameters = collect(request()->route()->parameters())->filter(fn ($value, $key) => str_contains($targetRoute->uri(), '{' . $key . '}'))->all();
+                        @endphp
+                        <x-uikit::buttons.link :route="$breadcrumb[1]" :parameters="$parameters" :livewire="$livewire">
+                            <x-uikit::app-template.interactive-panel :color="$primaryColor" :background-color="'transparent'">
+                                @if ($index !== 0)
+                                    &nbsp;>
+                                @endif    
+                                {{ $breadcrumb[0](request()->route()->parameters()) }}
+                            </x-uikit::app-template.interactive-panel>
+                        </x-uikit::buttons.link>
+                    @endforeach
+                </x-uikit::panels.horizontal-panel>   
+            @else
+                &nbsp;
+            @endif
+        </div> 
+        <div class="uikit-advanced-app-template-header">
+            {{ $header }}
+        </div>
+        <div class="uikit-advanced-app-template-slot">
+            {{ $slot }}
+        </div>
+        <div class="uikit-advanced-app-template-footer" style="background:{{ $primaryColor }}; color:{{ $secondaryColor }};">
+            {{ $footerText }}
+        </div>
     </div>
-    <div class="uikit-advanced-app-template-slot">
-        {{ $slot }}
-    </div>
-    <div class="uikit-advanced-app-template-footer" style="background:{{ $primaryColor }}; color:{{ $secondaryColor }};">
-        {{ $footerText }}
-    </div>
-  </div>
-
-
-
 </x-uikit::app-template>
