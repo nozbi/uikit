@@ -47,15 +47,15 @@ class MyApp extends App
     }
 
     #[Override]
-    protected function getLogo(): ?string //return logo image path relative to public folder
+    protected function getLogo(): ?string //return logo image path
     {
-        return 'images/logo.png';
+        return '/images/logo.png';
     }
 
     #[Override]
-    protected function getAvatar(): ?string  //return avatar image path relative to public folder
+    protected function getAvatar(): ?string  //return avatar image path
     {
-        return 'images/avatar.png';
+        return '/images/avatar.png';
     }
 
     #[Override]

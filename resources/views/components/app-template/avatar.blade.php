@@ -7,6 +7,6 @@
 
 <x-uikit::app-template.interactive-panel :color="$color" :background-color="$backgroundColor" :padding="2" :transparent="true">
     <div class="uikit-app-template-avatar">
-        <img class="uikit-app-template-avatar-image" src="{{ asset($avatar) }}" title="{{ $title }}">
+        <img class="uikit-app-template-avatar-image" src="{{ $avatar }}" title="{{ $title }}">
     </div>
 </x-uikit::app-template.interactive-panel>

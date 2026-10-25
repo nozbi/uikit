@@ -16,7 +16,7 @@
                 <div class="uikit-app-template-logo" style="color:white;">
                     <x-uikit::buttons.link :route="$route" :livewire="$livewire">
                         <x-uikit::app-template.interactive-panel :color="$color" :background-color="'transparent'" :transparent="true">
-                            <img class="uikit-app-template-logo-image" src="{{ asset($logo) }}" title="{{ $title }}">
+                            <img class="uikit-app-template-logo-image" src="{{ $logo }}" title="{{ $title }}">
                         </x-uikit::app-template.interactive-panel>
                     </x-uikit::buttons.link>
                 </div>
