@@ -56,6 +56,13 @@ body
     color: var(--uikit-app-template-search-bar-placeholder-color);
 }
 
+.uikit-app-template-search-bar:focus,
+.uikit-app-template-search-bar:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
 .uikit-app-template-arrow
 {
     width: 100%; 
