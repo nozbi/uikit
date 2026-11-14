@@ -1,1 +1,1 @@
-{!! \App\MyApp::render($slot) !!}
+{!! \Nozbi\Uikit\App\App::render($slot) !!}
