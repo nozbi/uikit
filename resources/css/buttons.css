@@ -1,7 +1,7 @@
 .uikit-buttons-button
 {
     display: block; 
-    cursor: default; 
+    cursor: pointer; 
     padding: 0; 
     margin: 0; 
     border: none; 
@@ -15,7 +15,7 @@
 .uikit-buttons-link
 {
     display: block; 
-    cursor: default; 
+    cursor: pointer; 
     -webkit-user-drag: none; 
     text-decoration: none; 
     color: inherit;
